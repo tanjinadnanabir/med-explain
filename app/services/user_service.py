@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
+from app.core.security import hash_password
 
 
 def create_user(
@@ -14,6 +15,9 @@ def create_user(
     user = User(
         email=user_data.email,
         full_name=user_data.full_name,
+        password_hash=hash_password(
+            user_data.password
+        ),
     )
 
     db.add(user)
@@ -21,6 +25,7 @@ def create_user(
     db.refresh(user)
 
     return user
+
 
 def get_user_by_id(
     db: Session,
@@ -32,6 +37,7 @@ def get_user_by_id(
 
     return db.scalar(statement)
 
+
 def get_user_by_email(
     db: Session,
     email: str,
@@ -41,6 +47,7 @@ def get_user_by_email(
     )
 
     return db.scalar(statement)
+
 
 def get_users(
     db: Session,
@@ -54,6 +61,7 @@ def get_users(
     )
 
     return list(db.scalars(statement).all())
+
 
 def update_user(
     db: Session,
@@ -71,6 +79,7 @@ def update_user(
     db.refresh(user)
 
     return user
+
 
 def delete_user(
     db: Session,
