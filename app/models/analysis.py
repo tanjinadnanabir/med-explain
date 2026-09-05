@@ -25,6 +25,23 @@ class Analysis(Base):
         String(500),
         nullable=False,
     )
+    
+    file_size: Mapped[int] = mapped_column(
+        nullable=False,
+    )
+
+    image_width: Mapped[int] = mapped_column(
+        nullable=False,
+    )
+
+    image_height: Mapped[int] = mapped_column(
+        nullable=False,
+    )
+
+    content_type: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+    )
 
     question: Mapped[str | None] = mapped_column(
         Text,

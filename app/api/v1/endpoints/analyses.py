@@ -28,12 +28,17 @@ async def create_analysis_endpoint(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    image_path = await file_service.save_image(file)
+    # image_path = await file_service.save_image(file)
+    image_info = await file_service.save_image(file)
 
     analysis = analysis_service.create_analysis(
         db=db,
         user_id=current_user.id,
-        image_path=image_path,
+        image_path=image_info["path"],
+        file_size=image_info["size"],
+        image_width=image_info["width"],
+        image_height=image_info["height"],
+        content_type=image_info["content_type"],
         question=question,
     )
 

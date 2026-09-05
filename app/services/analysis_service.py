@@ -9,11 +9,19 @@ def create_analysis(
     db: Session,
     user_id: uuid.UUID,
     image_path: str,
+    file_size: int,
+    image_width: int,
+    image_height: int,
+    content_type: str,
     question: str | None = None,
 ) -> Analysis:
     analysis = Analysis(
         user_id=user_id,
         image_path=image_path,
+        file_size=file_size,
+        image_width=image_width,
+        image_height=image_height,
+        content_type=content_type,
         question=question,
     )
 
