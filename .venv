@@ -1,4 +1,0 @@
-APP_NAME=MedExplain
-APP_VERSION=0.1.0
-DEBUG=True
-API_V1_PREFIX=/api/v1

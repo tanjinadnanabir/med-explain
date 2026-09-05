@@ -7,5 +7,10 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     API_V1_PREFIX: str = "/api/v1"
 
+    DATABASE_URL: str
+
+    class Config:
+        env_file = ".env"
+
 
 settings = Settings()
