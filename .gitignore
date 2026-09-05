@@ -33,3 +33,20 @@ tmp/
 
 # Uploaded files
 uploads/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environment
+.venv/
+venv/
+
+# Uploaded medical images
+uploads/
+
+# ML model files
+models/*.pt
+models/*.pth
+models/*.onnx
