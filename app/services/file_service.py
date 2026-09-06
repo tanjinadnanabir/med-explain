@@ -115,3 +115,9 @@ async def save_image(file: UploadFile) -> dict:
         "width": width,
         "height": height,
     }
+    
+def delete_image(image_path: str) -> None:
+    file_path = Path(image_path)
+
+    if file_path.exists() and file_path.is_file():
+        file_path.unlink()

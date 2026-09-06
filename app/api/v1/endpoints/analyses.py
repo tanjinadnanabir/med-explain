@@ -87,3 +87,34 @@ def get_analysis(
     return analysis
     
     
+@router.delete(
+    "/{analysis_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def delete_analysis_endpoint(
+    analysis_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    analysis = analysis_service.get_analysis_by_id(
+        db=db,
+        analysis_id=analysis_id,
+        user_id=current_user.id,
+    )
+
+    if analysis is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Analysis not found.",
+        )
+
+    image_path = analysis.image_path
+
+    analysis_service.delete_analysis(
+        db=db,
+        analysis=analysis,
+    )
+
+    file_service.delete_image(image_path)
+
+    return None
