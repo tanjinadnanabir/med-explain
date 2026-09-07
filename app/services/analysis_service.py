@@ -14,6 +14,9 @@ def create_analysis(
     image_height: int,
     content_type: str,
     question: str | None = None,
+    prediction: str | None = None,
+    confidence: float | None = None,
+    model_version: str | None = None,
 ) -> Analysis:
     analysis = Analysis(
         user_id=user_id,
@@ -23,6 +26,9 @@ def create_analysis(
         image_height=image_height,
         content_type=content_type,
         question=question,
+        prediction=prediction,
+        confidence=confidence,
+        model_version=model_version,
     )
 
     db.add(analysis)

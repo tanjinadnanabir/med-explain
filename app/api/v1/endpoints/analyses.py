@@ -8,7 +8,7 @@ from app.db.dependencies import get_db
 from app.models.analysis import Analysis
 from app.models.user import User
 from app.schemas.analysis import AnalysisResponse
-from app.services import analysis_service, file_service
+from app.services import analysis_service, file_service, image_preprocessing_service, model_service
 
 
 router = APIRouter(
@@ -30,6 +30,17 @@ async def create_analysis_endpoint(
 ):
     # image_path = await file_service.save_image(file)
     image_info = await file_service.save_image(file)
+    
+    image_tensor = (
+        image_preprocessing_service
+        .load_and_preprocess_image(
+            image_info["path"]
+        )
+    )
+
+    prediction_result = model_service.predict(
+        image_tensor
+    )
 
     analysis = analysis_service.create_analysis(
         db=db,
@@ -40,6 +51,9 @@ async def create_analysis_endpoint(
         image_height=image_info["height"],
         content_type=image_info["content_type"],
         question=question,
+        prediction=prediction_result["prediction"],
+        confidence=prediction_result["confidence"],
+        model_version=prediction_result["model_version"],
     )
 
     return analysis
